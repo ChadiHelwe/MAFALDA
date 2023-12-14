@@ -2,7 +2,9 @@ import logging
 import os
 from urllib import request
 
+import torch
 from llama_cpp import Llama
+from transformers import pipeline
 
 logger = logging.getLogger("MafaldaLogger")
 

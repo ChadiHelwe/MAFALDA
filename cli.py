@@ -30,9 +30,9 @@ def run_experiment(
 
 
 def run_chatgpt_experiment(
-    model_name: str, level: int,
+    model_name: str, level: int, api_key: str,
 ):
-    model = ChatGPTModel(model_name=model_name)
+    model = ChatGPTModel(model_name=model_name, api_key=api_key)
     zero_or_few_shots_pipeline(
         model=model,
         dataset_path="datasets/gold_standard_dataset.jsonl",
@@ -78,6 +78,8 @@ if __name__ == "__main__":
     )
     parser.add_argument("--models_eval", help="Evaluate", action="store_true")
     parser.add_argument("--humans_eval", help="Evaluate", action="store_true")
+    parser.add_argument("--api_key", type=str, help="OpenAI API Key")
+
     args = parser.parse_args()
 
     logger_filename = (
@@ -92,7 +94,7 @@ if __name__ == "__main__":
         else:
             if args.model[:3] == "gpt":
                 run_chatgpt_experiment(
-                    model_name=args.model, level=args.level,
+                    model_name=args.model, level=args.level, api_key=args.api_key,
                 )
             elif args.model[:4] == "base":
                 run_baseline_experiment(

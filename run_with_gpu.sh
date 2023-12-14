@@ -49,8 +49,7 @@ export CUDA_VISIBLE_DEVICES=$gpus
 cmd="python cli.py --model $modelname --size $size --quantization $quantization"
 
 # Iterate over levels
-for level in {2..2}
-do
-    echo "Running $modelname experiments with size $size, quantization $quantization at level $level with $gpu_layers GPU layers on devices $gpus"
-    $cmd --level $level --n_gpu_layers $gpu_layers
-done
+
+echo "Running $modelname experiments with size $size, quantization $quantization at level $level with $gpu_layers GPU layers on devices $gpus"
+$cmd --level 2 --n_gpu_layers $gpu_layers
+

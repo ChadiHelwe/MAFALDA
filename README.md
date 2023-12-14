@@ -13,6 +13,11 @@ cd  MAFALDA_NAACL
 pip install -r requirements.txt
 ```
 
+## Run Dummy Models
+```bash
+./run_dummy.sh
+```
+
 ## Run Experiments with Local Models
 
 ### with GPU
@@ -23,6 +28,10 @@ pip install -r requirements.txt
 ### with CPU
 ```bash
 ./run_with_cpu.sh
+```
+## Run Experiments with OpenAI (GPT 3.5)
+```bash
+./run_with_openai.sh
 ```
 
 ## Run Evaluation
