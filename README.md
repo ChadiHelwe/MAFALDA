@@ -13,7 +13,7 @@ cd  MAFALDA_NAACL
 pip install -r requirements.txt
 ```
 
-## Run Dummy Models
+## Run Experiment with Dummy Models
 ```bash
 ./run_dummy.sh
 ```
