@@ -13,4 +13,15 @@ cd  MAFALDA_NAACL
 pip install -r requirements.txt
 ```
 
-## Run
+## Run Experiments with Local Models
+
+### with GPU
+```bash
+./run_with_gpu.sh
+```
+
+### with CPU
+```bash
+./run_with_cpu.sh
+```
+
