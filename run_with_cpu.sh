@@ -36,7 +36,7 @@ read -p "Enter size (default: $default_size): " size
 size=${size:-$default_size}
 
 # Command construction
-cmd="python cli_experiments.py --model $modelname --size $size --quantization $quantization"
+cmd="python cli.py --model $modelname --size $size --quantization $quantization"
 
 # Iterate over levels
 for level in {2..2}

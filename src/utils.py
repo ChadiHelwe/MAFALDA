@@ -439,12 +439,7 @@ def non_fallacious_data_to_doccano(data_path: str, key: str, limit: int):
     data = data.reset_index()
     with open("doccano_input.jsonl", "w") as f:
         for id, row in data.iterrows():
-            json_line = json.dumps(
-                {
-                    "text": row[key],
-                    "labels": [],
-                }
-            )
+            json_line = json.dumps({"text": row[key], "labels": [],})
             f.write(json_line + "\n")
             if id == limit:
                 break

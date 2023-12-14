@@ -46,7 +46,7 @@ gpu_layers=${gpu_layers:-$default_gpu_layers}
 export CUDA_VISIBLE_DEVICES=$gpus
 
 # Command construction
-cmd="python cli_experiments.py --model $modelname --size $size --quantization $quantization"
+cmd="python cli.py --model $modelname --size $size --quantization $quantization"
 
 # Iterate over levels
 for level in {2..2}

@@ -1,22 +1,18 @@
 import argparse
 
+from src.classification_models.baseline_models import RandomModel, SilentModel
+from src.classification_models.openai_based_models import ChatGPTModel
 from src.classification_models.quantized_llama_based_models import (
     LLaMABasedQuantizedModel,
 )
-from src.classification_models.openai_based_models import ChatGPTModel
-from src.classification_models.baseline_models import RandomModel, SilentModel
-
 from src.evaluate import eval_dataset
 from src.experiments_pipelines.pipelines import zero_or_few_shots_pipeline
+from src.users_study_evaluation import users_study_evaluation
 from src.utils import setup_logger
 
 
 def run_experiment(
-    model: str,
-    size: str,
-    quantization: str,
-    level: int,
-    n_gpu_layers: int = 0,
+    model: str, size: str, quantization: str, level: int, n_gpu_layers: int = 0,
 ):
     model = LLaMABasedQuantizedModel(
         model_size=size,
@@ -32,9 +28,9 @@ def run_experiment(
         level=level,
     )
 
+
 def run_chatgpt_experiment(
-        model_name: str,
-        level: int,
+    model_name: str, level: int,
 ):
     model = ChatGPTModel(model_name=model_name)
     zero_or_few_shots_pipeline(
@@ -44,9 +40,9 @@ def run_chatgpt_experiment(
         level=level,
     )
 
+
 def run_baseline_experiment(
-        model_name: str,
-        level: int,
+    model_name: str, level: int,
 ):
     if model_name == "base-silent":
         model = SilentModel(model_name=model_name)
@@ -62,8 +58,13 @@ def run_baseline_experiment(
         level=level,
     )
 
-def evaluate():
+
+def models_evaluation():
     eval_dataset("datasets/gold_standard_dataset.jsonl", "results")
+
+
+def humans_evaluation():
+    users_study_evaluation()
 
 
 if __name__ == "__main__":
@@ -75,8 +76,8 @@ if __name__ == "__main__":
     parser.add_argument(
         "--n_gpu_layers", type=int, help="Number of GPUs for layer", default=0
     )
-    parser.add_argument("--eval", help="Evaluate", action="store_true")
-
+    parser.add_argument("--models_eval", help="Evaluate", action="store_true")
+    parser.add_argument("--humans_eval", help="Evaluate", action="store_true")
     args = parser.parse_args()
 
     logger_filename = (
@@ -84,18 +85,18 @@ if __name__ == "__main__":
     )
     logger = setup_logger(logger_filename)
     try:
-        if args.eval:
-            evaluate()
+        if args.models_eval:
+            models_evaluation()
+        elif args.humans_eval:
+            humans_evaluation()
         else:
             if args.model[:3] == "gpt":
                 run_chatgpt_experiment(
-                    model_name=args.model,
-                    level=args.level,
+                    model_name=args.model, level=args.level,
                 )
             elif args.model[:4] == "base":
                 run_baseline_experiment(
-                    model_name=args.model,
-                    level=args.level,
+                    model_name=args.model, level=args.level,
                 )
             else:
                 run_experiment(

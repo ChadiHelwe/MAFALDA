@@ -253,7 +253,7 @@ def text_full_task_precision(
                 )
                 if p_pos * ls > p_sum[-1]:
                     p_sum[-1] = p_pos * ls
-        print(p_sum)
+        # print(p_sum)
         p_sum = sum(p_sum)
 
         p_denominator = len([s for s in pred_corpus.spans if s.label != NOTHING_LABEL])

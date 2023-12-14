@@ -25,12 +25,11 @@ pip install -r requirements.txt
 ./run_with_cpu.sh
 ```
 
-## Run Experiments Evaluation
+## Run Evaluation
 ```bash
-./run_xp_eval.sh
+./run_eval.sh
 ```
 
-## Run Human Evaluation
-```bash
-./rum_humnan_eval.sh
-```
+N.B: Code tested with Python 3.9.12
+
+We acknowledge the use of a code writing assistant.
