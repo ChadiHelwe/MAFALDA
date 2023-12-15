@@ -8,7 +8,7 @@ We then evaluate several language models under a zero-shot learning setting and 
 
 ## Installation
 ```bash
-git clone https://github.com/yourusername/MAFALDA_NAACL.git
+git clone https://github.com/username/MAFALDA_NAACL.git
 cd  MAFALDA_NAACL
 pip install -r requirements.txt
 ```
