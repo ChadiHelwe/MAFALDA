@@ -267,7 +267,7 @@ def __concatenate_sentences_to_spans(
                 end_index = begin_index + len(tmp_span)
                 spans.append(PredictionSpan(tmp_span, label, [begin_index, end_index]))
 
-        begin_index += len(current_sentence)
+        begin_index += len(current_sentence) + 1 # Check + 1
 
     return AnnotatedText(spans)
 
