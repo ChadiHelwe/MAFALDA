@@ -82,6 +82,35 @@ LEVEL_2_NUMERIC = {
     "tu quoque": 23,
 }
 
+
+NUMERIC_TO_LEVEL_2 = {
+    0: "nothing",
+    1: "appeal to positive emotion",
+    2: "appeal to anger",
+    3: "appeal to fear",
+    4: "appeal to pity",
+    5: "appeal to ridicule",
+    6: "appeal to worse problems",
+    7: "causal oversimplification",
+    8: "circular reasoning",
+    9: "equivocation",
+    10: "false analogy",
+    11: "false causality",
+    12: "false dilemma",
+    13: "hasty generalization",
+    14: "slippery slope",
+    15: "straw man",
+    16: "fallacy of division",
+    17: "ad hominem",
+    18: "ad populum",
+    19: "appeal to (false) authority",
+    20: "appeal to nature",
+    21: "appeal to tradition",
+    22: "guilt by association",
+    23: "tu quoque",
+    24: "unknown"
+}
+
 KEYWORDS_LEVEL_2_NUMERIC = {
     "emotion": 1,
     "anger": 2,
@@ -173,7 +202,8 @@ def extract_labels_level_2(pred_output: str):
         if keyword in pred_output:
             set_labels.add(KEYWORDS_LEVEL_2_NUMERIC[keyword])
 
-    if re.search(NON_FALLACIES_REGEX, str(pred_output[0]).lower()):
+    # print(str(pred_output).lower())
+    if re.search(NON_FALLACIES_REGEX, str(pred_output).lower()):
         set_labels.add(0)
     if set_labels == set():
         set_labels.add(24)
