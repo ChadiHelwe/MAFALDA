@@ -168,6 +168,35 @@ LEVEL_2_TO_1 = {
     24: 4,
 }
 
+
+FALLACIES_LEVEL_2_TO_LEVEL_1 = {
+    "nothing": "nothing",
+    "appeal to positive emotion":"emotion",
+    "appeal to anger": "emotion",
+    "appeal to fear": "emotion",
+    "appeal to pity": "emotion",
+    "appeal to ridicule": "emotion",
+    "appeal to worse problems": "emotion",
+    "causal oversimplification": "logic",
+    "circular reasoning": "logic",
+    "equivocation": "logic",
+    "false analogy": "logic",
+    "false causality": "logic",
+    "false dilemma": "logic",
+    "hasty generalization": "logic",
+    "slippery slope": "logic",
+    "straw man": "logic",
+    "fallacy of division": "logic",
+    "ad hominem": "credibility",
+    "ad populum": "credibility",
+    "appeal to (false) authority": "credibility",
+    "appeal to nature": "credibility",
+    "appeal to tradition": "credibility",
+    "guilt by association": "credibility",
+    "tu quoque": "credibility",
+    "unknown": "unknown"
+}
+
 MODELS_INSTUCTIONS_TAGS = {
     "LLaMA2": ("[INST]", "[/INST]"),
     "LLaMA2-Chat": ("[INST]", "[/INST]"),
