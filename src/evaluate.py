@@ -235,6 +235,7 @@ def extract_labels_level_2(pred_output: str):
     if re.search(NON_FALLACIES_REGEX, str(pred_output).lower()):
         set_labels.add(0)
     if set_labels == set():
+        print(pred_output)
         set_labels.add(24)
 
     return set_labels
