@@ -185,6 +185,15 @@ def f1_score(pred_annotations: AnnotatedText, gold_annotations: AnnotatedText) -
     return 2 * (precision * recall) / (precision + recall)
 
 
+def precision_recall_f1_score(
+    pred_annotations: AnnotatedText, gold_annotations: AnnotatedText
+) -> Tuple[float, float, float]:
+    precision = precision_score(pred_annotations, gold_annotations)
+    recall = recall_score(pred_annotations, gold_annotations)
+    f1 = f1_score(pred_annotations, gold_annotations)
+    return precision, recall, f1
+
+
 if __name__ == "__main__":
     text1 = "Lorem ipsum dolor sit amet"
     int1 = [0, 24]
@@ -255,3 +264,106 @@ if __name__ == "__main__":
     assert precision_score(pd15, gd1) == 0
     assert recall_score(pd15, gd1) == 1
     assert f1_score(pd15, gd1) == 0
+
+    # Case 1pr
+    gd1pr = AnnotatedText([GroundTruthSpan(text1, {1}, int1)])
+
+    pd1pr1 = AnnotatedText([PredictionSpan(text1, 1, int1)])
+
+    pd1pr2 = AnnotatedText([PredictionSpan(text1, 3, int1)])
+
+    pd1pr3 = AnnotatedText([PredictionSpan(text2, 1, int2)])
+
+    pd1pr4 = AnnotatedText([])
+
+    assert precision_score(pd1pr1, gd1pr) == 1
+    assert recall_score(pd1pr1, gd1pr) == 1
+    assert f1_score(pd1pr1, gd1pr) == 1
+
+    assert precision_score(pd1pr2, gd1pr) == 0
+    assert recall_score(pd1pr2, gd1pr) == 0
+    assert f1_score(pd1pr2, gd1pr) == 0
+
+    assert precision_score(pd1pr3, gd1pr) == 0
+    assert recall_score(pd1pr3, gd1pr) == 0
+    assert f1_score(pd1pr3, gd1pr) == 0
+
+    assert precision_score(pd1pr4, gd1pr) == 1
+    assert recall_score(pd1pr4, gd1pr) == 0
+    assert f1_score(pd1pr4, gd1pr) == 0
+
+    # Case 1dpr
+    gd1dpr = AnnotatedText([])
+
+    pd1dpr1 = AnnotatedText([PredictionSpan(text1, 1, int1)])
+    pd1dpr2 = AnnotatedText([])
+
+    assert precision_score(pd1dpr1, gd1dpr) == 0
+    assert recall_score(pd1dpr1, gd1dpr) == 1
+    assert f1_score(pd1dpr1, gd1dpr) == 0
+
+    assert precision_score(pd1dpr2, gd1dpr) == 1
+    assert recall_score(pd1dpr2, gd1dpr) == 1
+    assert f1_score(pd1dpr2, gd1dpr) == 1
+
+    # Case 2
+    gd2 = AnnotatedText(
+        [GroundTruthSpan(text1, {1, 0}, int1), GroundTruthSpan(text2, {2}, int2)]
+    )
+
+    pd21 = AnnotatedText([PredictionSpan(text1, 1, int1)])
+
+    pd22 = AnnotatedText([PredictionSpan(text1, 3, int1)])
+
+    pd23 = AnnotatedText([PredictionSpan(text2, 2, int2)])
+
+    pd24 = AnnotatedText([PredictionSpan(text2, 3, int2)])
+
+    assert precision_score(pd21, gd2) == 1
+    assert recall_score(pd21, gd2) == 0
+    assert f1_score(pd21, gd2) == 0
+
+    assert precision_score(pd22, gd2) == 0
+    assert recall_score(pd22, gd2) == 0
+    assert f1_score(pd22, gd2) == 0
+
+    assert precision_score(pd23, gd2) == 1
+    assert recall_score(pd23, gd2) == 1
+    assert f1_score(pd23, gd2) == 1
+
+    assert precision_score(pd24, gd2) == 0
+    assert recall_score(pd24, gd2) == 0
+    assert f1_score(pd24, gd2) == 0
+
+    # Case 3
+    gd3 = AnnotatedText([GroundTruthSpan(f"{text1} {text2}", {1, 0}, [0, 50])])
+
+    pd31 = AnnotatedText([PredictionSpan(f"{text1} {text2}", 1, [0, 50])])
+
+    pd32 = AnnotatedText([])
+
+    pd33 = AnnotatedText([PredictionSpan(text1, 1, int1)])
+
+    pd34 = AnnotatedText([PredictionSpan(f"{text1} {text2}", 3, [0, 50])])
+
+    pd35 = AnnotatedText([PredictionSpan(text2, 3, int2)])
+
+    assert precision_score(pd31, gd3) == 1
+    assert recall_score(pd31, gd3) == 1
+    assert f1_score(pd31, gd3) == 1
+
+    assert precision_score(pd32, gd3) == 1
+    assert recall_score(pd32, gd3) == 1
+    assert f1_score(pd32, gd3) == 1
+
+    assert precision_score(pd33, gd3) == 1
+    assert recall_score(pd33, gd3) == 1
+    assert f1_score(pd33, gd3) == 1
+
+    assert precision_score(pd34, gd3) == 0
+    assert recall_score(pd34, gd3) == 1
+    assert f1_score(pd34, gd3) == 0
+
+    assert precision_score(pd35, gd3) == 0
+    assert recall_score(pd35, gd3) == 1
+    assert f1_score(pd35, gd3) == 0

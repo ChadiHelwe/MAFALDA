@@ -366,7 +366,7 @@ def build_prediction_spans(
     return all_y_pred
 
 
-def concatenate_sentences_to_spans_levels(y_pred: [OrderedDict], level: int = 2):
+def concatenate_sentences_to_spans_levels(y_pred: [OrderedDict], level: int = 2):  # type: ignore
     all_y_pred = []
     for y_pred_instance in y_pred:
         if level == 1:
