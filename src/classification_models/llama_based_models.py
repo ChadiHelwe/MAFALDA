@@ -32,7 +32,10 @@ class BaseModel:
 
 class LLaMAModel(BaseModel):
     def __init__(
-        self, input_dir: str, output_dir: str, model_size: str = "7B",
+        self,
+        input_dir: str,
+        output_dir: str,
+        model_size: str = "7B",
     ) -> None:
         if not os.path.exists(output_dir):
             write_model(
@@ -47,7 +50,10 @@ class LLaMAModel(BaseModel):
 
 class LLaMAModelQuantized(BaseModel):
     def __init__(
-        self, input_dir: str, output_dir: str, model_size: str = "7B",
+        self,
+        input_dir: str,
+        output_dir: str,
+        model_size: str = "7B",
     ) -> None:
         if not os.path.exists(output_dir):
             write_model(

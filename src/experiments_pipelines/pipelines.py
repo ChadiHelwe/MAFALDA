@@ -236,6 +236,9 @@ def zero_or_few_shots_pipeline(
                 pred_outputs[s] = output
             # pred_outputs = pred_outputs[:-1] + "}}"
             json_line = json.dumps(
-                {"text": example["text"], "prediction": pred_outputs,}
+                {
+                    "text": example["text"],
+                    "prediction": pred_outputs,
+                }
             )
             f.write(json_line + "\n")

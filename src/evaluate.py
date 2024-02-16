@@ -108,7 +108,7 @@ NUMERIC_TO_LEVEL_2 = {
     21: "appeal to tradition",
     22: "guilt by association",
     23: "tu quoque",
-    24: "unknown"
+    24: "unknown",
 }
 
 KEYWORDS_LEVEL_2_NUMERIC = {
@@ -171,7 +171,7 @@ LEVEL_2_TO_1 = {
 
 FALLACIES_LEVEL_2_TO_LEVEL_1 = {
     "nothing": "nothing",
-    "appeal to positive emotion":"emotion",
+    "appeal to positive emotion": "emotion",
     "appeal to anger": "emotion",
     "appeal to fear": "emotion",
     "appeal to pity": "emotion",
@@ -194,7 +194,7 @@ FALLACIES_LEVEL_2_TO_LEVEL_1 = {
     "appeal to tradition": "credibility",
     "guilt by association": "credibility",
     "tu quoque": "credibility",
-    "unknown": "unknown"
+    "unknown": "unknown",
 }
 
 MODELS_INSTUCTIONS_TAGS = {
@@ -296,7 +296,7 @@ def __concatenate_sentences_to_spans(
                 end_index = begin_index + len(tmp_span)
                 spans.append(PredictionSpan(tmp_span, label, [begin_index, end_index]))
 
-        begin_index += len(current_sentence) + 1 # Check + 1
+        begin_index += len(current_sentence) + 1  # Check + 1
 
     return AnnotatedText(spans)
 
