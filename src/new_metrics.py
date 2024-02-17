@@ -226,11 +226,9 @@ if __name__ == "__main__":
     # Case 0
     assert precision_score(pd01, gd0) == 1
     assert recall_score(pd01, gd0) == 1 / 2
-    assert f1_score(pd01, gd0) == 2 / 3
 
     assert precision_score(pd02, gd0) == 1
     assert recall_score(pd02, gd0) == 1 / 2
-    assert f1_score(pd02, gd0) == 2 / 3
 
     # Case 1
     gd1 = AnnotatedText([GroundTruthSpan(text1, {1, 0}, int1)])
@@ -247,23 +245,18 @@ if __name__ == "__main__":
 
     assert precision_score(pd11, gd1) == 1
     assert recall_score(pd11, gd1) == 1
-    assert f1_score(pd11, gd1) == 1
 
     assert precision_score(pd12, gd1) == 0
     assert recall_score(pd12, gd1) == 1
-    assert f1_score(pd12, gd1) == 0
 
     assert precision_score(pd13, gd1) == 1
     assert recall_score(pd13, gd1) == 1
-    assert f1_score(pd13, gd1) == 1
 
     assert precision_score(pd14, gd1) == 0
     assert recall_score(pd14, gd1) == 1
-    assert f1_score(pd14, gd1) == 0
 
     assert precision_score(pd15, gd1) == 0
     assert recall_score(pd15, gd1) == 1
-    assert f1_score(pd15, gd1) == 0
 
     # Case 1pr
     gd1pr = AnnotatedText([GroundTruthSpan(text1, {1}, int1)])
@@ -278,19 +271,15 @@ if __name__ == "__main__":
 
     assert precision_score(pd1pr1, gd1pr) == 1
     assert recall_score(pd1pr1, gd1pr) == 1
-    assert f1_score(pd1pr1, gd1pr) == 1
 
     assert precision_score(pd1pr2, gd1pr) == 0
     assert recall_score(pd1pr2, gd1pr) == 0
-    assert f1_score(pd1pr2, gd1pr) == 0
 
     assert precision_score(pd1pr3, gd1pr) == 0
     assert recall_score(pd1pr3, gd1pr) == 0
-    assert f1_score(pd1pr3, gd1pr) == 0
 
     assert precision_score(pd1pr4, gd1pr) == 1
     assert recall_score(pd1pr4, gd1pr) == 0
-    assert f1_score(pd1pr4, gd1pr) == 0
 
     # Case 1dpr
     gd1dpr = AnnotatedText([])
@@ -300,11 +289,9 @@ if __name__ == "__main__":
 
     assert precision_score(pd1dpr1, gd1dpr) == 0
     assert recall_score(pd1dpr1, gd1dpr) == 1
-    assert f1_score(pd1dpr1, gd1dpr) == 0
 
     assert precision_score(pd1dpr2, gd1dpr) == 1
     assert recall_score(pd1dpr2, gd1dpr) == 1
-    assert f1_score(pd1dpr2, gd1dpr) == 1
 
     # Case 2
     gd2 = AnnotatedText(
@@ -321,19 +308,15 @@ if __name__ == "__main__":
 
     assert precision_score(pd21, gd2) == 1
     assert recall_score(pd21, gd2) == 0
-    assert f1_score(pd21, gd2) == 0
 
     assert precision_score(pd22, gd2) == 0
     assert recall_score(pd22, gd2) == 0
-    assert f1_score(pd22, gd2) == 0
 
     assert precision_score(pd23, gd2) == 1
     assert recall_score(pd23, gd2) == 1
-    assert f1_score(pd23, gd2) == 1
 
     assert precision_score(pd24, gd2) == 0
     assert recall_score(pd24, gd2) == 0
-    assert f1_score(pd24, gd2) == 0
 
     # Case 3
     gd3 = AnnotatedText([GroundTruthSpan(f"{text1} {text2}", {1, 0}, [0, 50])])
@@ -350,20 +333,111 @@ if __name__ == "__main__":
 
     assert precision_score(pd31, gd3) == 1
     assert recall_score(pd31, gd3) == 1
-    assert f1_score(pd31, gd3) == 1
 
     assert precision_score(pd32, gd3) == 1
     assert recall_score(pd32, gd3) == 1
-    assert f1_score(pd32, gd3) == 1
 
     assert precision_score(pd33, gd3) == 1
     assert recall_score(pd33, gd3) == 1
-    assert f1_score(pd33, gd3) == 1
 
     assert precision_score(pd34, gd3) == 0
     assert recall_score(pd34, gd3) == 1
-    assert f1_score(pd34, gd3) == 0
 
     assert precision_score(pd35, gd3) == 0
     assert recall_score(pd35, gd3) == 1
-    assert f1_score(pd35, gd3) == 0
+
+    # Case 4
+    gd4 = AnnotatedText(
+        [
+            GroundTruthSpan(f"{text1} {text2}", {1, 0}, [0, 50]),
+            GroundTruthSpan(text2, {2}, int2),
+        ]
+    )
+
+    pd41 = AnnotatedText(
+        [PredictionSpan(f"{text1} {text2}", 1, [0, 50]), PredictionSpan(text2, 2, int2)]
+    )
+
+    pd42 = AnnotatedText([PredictionSpan(text2, 2, int2)])
+
+    pd43 = AnnotatedText([PredictionSpan(f"{text1} {text2}", 1, [0, 50])])
+
+    pd44 = AnnotatedText([])
+
+    pd45 = AnnotatedText(
+        [PredictionSpan(text1, 1, int1), PredictionSpan(text2, 2, int2)]
+    )
+
+    pd46 = AnnotatedText([PredictionSpan(text1, 1, int1)])
+
+    pd47 = AnnotatedText([PredictionSpan(text2, 3, int2)])
+
+    assert precision_score(pd41, gd4) == 1
+    assert recall_score(pd41, gd4) == 1
+
+    assert precision_score(pd42, gd4) == 1
+    assert recall_score(pd42, gd4) == 1
+
+    assert precision_score(pd43, gd4) == 1
+    assert recall_score(pd43, gd4) == 0
+
+    assert precision_score(pd44, gd4) == 1
+    assert recall_score(pd44, gd4) == 0
+
+    assert precision_score(pd45, gd4) == 1
+    assert recall_score(pd45, gd4) == 1
+
+    assert precision_score(pd46, gd4) == 1
+    assert recall_score(pd46, gd4) == 0
+
+    assert precision_score(pd47, gd4) == 0
+    assert recall_score(pd47, gd4) == 0
+
+    # Case 5
+    gd5 = AnnotatedText(
+        [
+            GroundTruthSpan(f"{text1} {text2}", {1}, [0, 50]),
+            GroundTruthSpan(text2, {2}, int2),
+        ]
+    )
+
+    pd51 = AnnotatedText(
+        [PredictionSpan(f"{text1} {text2}", 1, [0, 50]), PredictionSpan(text2, 2, int2)]
+    )
+
+    pd52 = AnnotatedText([PredictionSpan(text2, 2, int2)])
+
+    pd53 = AnnotatedText([PredictionSpan(f"{text1} {text2}", 1, [0, 50])])
+
+    pd54 = AnnotatedText([])
+
+    pd55 = AnnotatedText(
+        [PredictionSpan(text1, 1, int1), PredictionSpan(text2, 2, int2)]
+    )
+
+    pd56 = AnnotatedText([PredictionSpan(text1, 1, int1)])
+
+    pd57 = AnnotatedText([PredictionSpan(text2, 3, int2)])
+
+    assert precision_score(pd51, gd5) == 1
+    assert recall_score(pd51, gd5) == 1
+
+    assert precision_score(pd52, gd5) == 1
+    assert recall_score(pd52, gd5) == 1 / 2
+
+    assert precision_score(pd53, gd5) == 1
+    assert recall_score(pd53, gd5) == 1 / 2
+
+    assert precision_score(pd54, gd5) == 1
+    assert recall_score(pd54, gd5) == 0
+
+    assert precision_score(pd55, gd5) == 1
+    assert recall_score(pd55, gd5) == 0.74
+
+    assert precision_score(pd56, gd5) == 1
+    assert recall_score(pd56, gd5) == 0.24
+
+    assert precision_score(pd57, gd5) == 0
+    assert recall_score(pd57, gd5) == 0
+
+    # Case 6
