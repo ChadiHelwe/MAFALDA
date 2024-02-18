@@ -7,13 +7,8 @@ from copy import deepcopy
 from typing import Any
 
 from src.evaluate import LEVEL_2_NUMERIC, LEVEL_2_TO_1, build_ground_truth_spans
-from src.metrics import (
-    AnnotatedText,
-    NbClasses,
-    PredictionSpan,
-    text_full_task_p_r_f1,
-    text_label_only_p_r_f1,
-)
+from src.metrics import AnnotatedText, NbClasses, PredictionSpan, text_label_only_p_r_f1
+from src.new_metrics import text_full_task_p_r_f1
 from src.utils import read_jsonl
 
 

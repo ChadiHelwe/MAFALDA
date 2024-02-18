@@ -185,9 +185,13 @@ def f1_score(pred_annotations: AnnotatedText, gold_annotations: AnnotatedText) -
     return 2 * (precision * recall) / (precision + recall)
 
 
-def precision_recall_f1_score(
+def text_full_task_p_r_f1(
     pred_annotations: AnnotatedText, gold_annotations: AnnotatedText
 ) -> Tuple[float, float, float]:
+    if not pred_annotations.spans and not gold_annotations.spans:
+        # there was nothing to predict and nothing was found
+        return 1, 1, 1
+
     precision = precision_score(pred_annotations, gold_annotations)
     recall = recall_score(pred_annotations, gold_annotations)
     f1 = f1_score(pred_annotations, gold_annotations)

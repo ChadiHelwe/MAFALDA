@@ -12,9 +12,9 @@ from src.metrics import (
     GroundTruthSpan,
     NbClasses,
     PredictionSpan,
-    text_full_task_p_r_f1,
     text_label_only_p_r_f1,
 )
+from src.new_metrics import text_full_task_p_r_f1
 from src.utils import read_jsonl
 
 LEVEL_0_FALLACIES_REGEX = r"\b(?:contains|yes|true|is a fallacy|is part)\b"
