@@ -196,11 +196,11 @@ def precision_recall_f1_score(
 
 if __name__ == "__main__":
     text1 = "Lorem ipsum dolor sit amet"
-    int1 = [0, 24]
+    int1 = [0, 25]
     text2 = "Ut enim ad minim veniam"
     int2 = [25, 50]
     text3 = "Blabla et blabla et blabla"
-    int3 = [51, 76]
+    int3 = [50, 75]
 
     gd0 = AnnotatedText(
         [
@@ -432,12 +432,92 @@ if __name__ == "__main__":
     assert recall_score(pd54, gd5) == 0
 
     assert precision_score(pd55, gd5) == 1
-    assert recall_score(pd55, gd5) == 0.74
+    assert recall_score(pd55, gd5) == 0.75
 
     assert precision_score(pd56, gd5) == 1
-    assert recall_score(pd56, gd5) == 0.24
+    assert recall_score(pd56, gd5) == 0.25
 
     assert precision_score(pd57, gd5) == 0
     assert recall_score(pd57, gd5) == 0
 
     # Case 6
+    gd6 = AnnotatedText(
+        [
+            GroundTruthSpan(f"{text1} {text2}", {1}, [0, 50]),
+            GroundTruthSpan(text2, {1}, int2),
+        ]
+    )
+
+    pd61 = AnnotatedText(
+        [PredictionSpan(f"{text1} {text2}", 1, [0, 50]), PredictionSpan(text2, 1, int2)]
+    )
+
+    pd62 = AnnotatedText([PredictionSpan(text2, 1, int2)])
+
+    pd63 = AnnotatedText([PredictionSpan(f"{text1} {text2}", 1, [0, 50])])
+
+    pd64 = AnnotatedText(
+        [PredictionSpan(text2, 1, int2), PredictionSpan(text2, 1, int2)]
+    )
+
+    pd65 = AnnotatedText(
+        [PredictionSpan(text1, 1, int1), PredictionSpan(text2, 1, int2)]
+    )
+
+    pd66 = AnnotatedText([PredictionSpan(text1, 1, int1)])
+
+    assert precision_score(pd61, gd6) == 1
+    assert recall_score(pd61, gd6) == 1
+
+    assert precision_score(pd62, gd6) == 1
+    assert recall_score(pd62, gd6) == 0.75
+
+    # print(precision_score(pd63, gd6))
+    assert precision_score(pd63, gd6) == 1
+    assert recall_score(pd63, gd6) == 1
+
+    assert precision_score(pd64, gd6) == 1
+    assert recall_score(pd64, gd6) == 0.75
+
+    assert precision_score(pd65, gd6) == 1
+    assert recall_score(pd65, gd6) == 0.75
+
+    assert precision_score(pd66, gd6) == 1
+    assert recall_score(pd66, gd6) == 0.25
+
+    # Case 7
+    gd7 = AnnotatedText(
+        [GroundTruthSpan(text1, {1, 0}, int1), GroundTruthSpan(text1, {1}, int1)]
+    )
+
+    pd71 = AnnotatedText(
+        [PredictionSpan(text1, 1, int1), PredictionSpan(text1, 1, int1)]
+    )
+
+    pd72 = AnnotatedText([PredictionSpan(text1, 1, int1)])
+
+    pd73 = AnnotatedText([PredictionSpan(text1, 1, int1)])
+
+    pd74 = AnnotatedText([PredictionSpan(f"{text1} {text2}", 1, [0, 50])])
+
+    pd75 = AnnotatedText([])
+
+    pd76 = AnnotatedText([PredictionSpan(text2, 1, int2)])
+
+    assert precision_score(pd71, gd7) == 1
+    assert recall_score(pd71, gd7) == 1
+
+    assert precision_score(pd72, gd7) == 1
+    assert recall_score(pd72, gd7) == 1
+
+    assert precision_score(pd73, gd7) == 1
+    assert recall_score(pd73, gd7) == 1
+
+    assert precision_score(pd74, gd7) == 1 / 2
+    assert recall_score(pd74, gd7) == 1
+
+    assert precision_score(pd75, gd7) == 1
+    assert recall_score(pd75, gd7) == 0
+
+    assert precision_score(pd76, gd7) == 0
+    assert recall_score(pd76, gd7) == 0
