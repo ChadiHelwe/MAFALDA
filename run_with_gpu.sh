@@ -9,6 +9,7 @@ default_gpus="0"
 default_quantization="4-bit"
 default_size="7B"
 default_gpu_layers="100"
+default_level="2"
 
 # Display list of models and read selection
 echo "Select a model from the list below by entering its number:"
@@ -42,6 +43,9 @@ size=${size:-$default_size}
 read -p "Enter number of GPU layers (default: $default_gpu_layers): " gpu_layers
 gpu_layers=${gpu_layers:-$default_gpu_layers}
 
+read -p "Enter level (default: $default_level): " level
+level=${level:-$default_level}
+
 # Export GPU devices to be used by CUDA
 export CUDA_VISIBLE_DEVICES=$gpus
 
@@ -51,5 +55,5 @@ cmd="python cli.py --model $modelname --size $size --quantization $quantization"
 # Iterate over levels
 
 echo "Running $modelname experiments with size $size, quantization $quantization at level $level with $gpu_layers GPU layers on devices $gpus"
-$cmd --level 2 --n_gpu_layers $gpu_layers
+$cmd --level $level --n_gpu_layers $gpu_layers
 
