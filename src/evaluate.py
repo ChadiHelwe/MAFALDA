@@ -240,6 +240,32 @@ def extract_labels_level_2(pred_output: str):
     return set_labels
 
 
+def extract_labels_level_1(pred_output: str):
+    idx_output = pred_output.find("Output:")
+    if idx_output != -1:
+        pred_output = pred_output[idx_output:]
+    idx_to_remove = pred_output.find("Based on the above text, determine")
+    if idx_to_remove != -1:
+        # the model has repetead the instructions
+        pred_output = pred_output[:idx_to_remove]
+    pred_output = clean_pred_output(pred_output.lower())
+    instruction_idx = pred_output.find("based on the above")
+    if instruction_idx != -1:
+        pred_output = pred_output[:instruction_idx]
+    set_labels = set()
+    for keyword in KEWORDS_LEVEL_1_NUMERIC:
+        if keyword in pred_output:
+            set_labels.add(KEWORDS_LEVEL_1_NUMERIC[keyword])
+
+    # print(str(pred_output).lower())
+    if re.search(NON_FALLACIES_REGEX, str(pred_output).lower()):
+        set_labels.add(0)
+    if set_labels == set():
+        set_labels.add(4)
+
+    return set_labels
+
+
 def __concatenate_sentences_to_spans(
     sentences_with_labels: OrderedDict[str, set[Any]]
 ) -> AnnotatedText:
@@ -349,7 +375,11 @@ def build_ground_truth_spans(text: str, labels: list[list[Any]]):
 
 
 def build_prediction_spans(
-    pred_dataset, gold_dataset, begin_instruction_tag="", end_instruction_tag=""
+    pred_dataset,
+    gold_dataset,
+    begin_instruction_tag="",
+    end_instruction_tag="",
+    level=2,
 ):
     all_y_pred = []
 
@@ -358,7 +388,10 @@ def build_prediction_spans(
         y_pred = OrderedDict()
 
         for sentence, generated_out in pred_instance["prediction"].items():
-            pred_label = extract_labels_level_2(generated_out)
+            if level == 2:
+                pred_label = extract_labels_level_2(generated_out)
+            else:
+                pred_label = extract_labels_level_1(generated_out)
             y_pred[sentence] = pred_label
 
         all_y_pred.append(__concatenate_sentences_to_spans(y_pred))
@@ -626,3 +659,76 @@ def eval_dataset(dataset_path: str, results_path: str):
                         label_f1_level_2,
                     ]
                 )
+
+
+def evaluate_level_1(dataset_path: str, prediction_path: str):
+    all_y_true = []
+
+    gold_dataset = read_jsonl(dataset_path)
+    pred_dataset = read_jsonl(prediction_path)
+
+    begin_instruction_tag = ""
+    end_instruction_tag = ""
+
+    for model in MODELS_INSTUCTIONS_TAGS:
+        if model in prediction_path:
+            begin_instruction_tag = MODELS_INSTUCTIONS_TAGS[model][0]
+            end_instruction_tag = MODELS_INSTUCTIONS_TAGS[model][1]
+            break
+
+        # Build ground truth spans for each instance in the gold dataset
+    for i in gold_dataset:
+        all_y_true.append(build_ground_truth_spans(i["text"], i["labels"]))
+
+        # Build predicted spans using the prediction dataset and the gold dataset
+    all_y_pred = build_prediction_spans(
+        pred_dataset, gold_dataset, begin_instruction_tag, end_instruction_tag, level=1
+    )
+
+    #### Level 1
+    f1_level_1 = 0
+    precision_level_1 = 0
+    recall_level_1 = 0
+    label_f1_level_1 = 0
+    label_precision_level_1 = 0
+    label_recall_level_1 = 0
+    try:
+        # all_y_pred = concatenate_sentences_to_spans_levels(deepcopy(all_y_pred_not_concatenated), level=1)
+        for y_pred, y_true in zip(all_y_pred, all_y_true):
+            # Convert labels from Level 2 to Level 1 for ground truth spans
+            for j in range(len(y_true.spans)):
+                tmp_set_labels = set()
+                for label in y_true.spans[j].labels:
+                    if label is not None:
+                        tmp_set_labels.add(LEVEL_2_TO_1[label])
+                    else:
+                        tmp_set_labels.add(None)
+                y_true.spans[j].labels = tmp_set_labels
+
+                # print(y_pred, y_true)
+            p, r, f1 = text_label_only_p_r_f1(y_pred, y_true, NbClasses.LVL_1)
+            label_precision_level_1 += p
+            label_recall_level_1 += r
+            label_f1_level_1 += f1 if not math.isnan(f1) else 0
+            p, r, f1 = text_full_task_p_r_f1(y_pred, y_true)
+            precision_level_1 += p
+            recall_level_1 += r
+            f1_level_1 += f1 if not math.isnan(f1) else 0
+    except Exception as e:
+        print(e)
+        print(traceback.format_exc())
+    label_precision_level_1 /= len(all_y_pred)
+    label_recall_level_1 /= len(all_y_pred)
+    label_f1_level_1 /= len(all_y_pred)
+    precision_level_1 /= len(all_y_pred)
+    recall_level_1 /= len(all_y_pred)
+    f1_level_1 /= len(all_y_pred)
+
+    return (
+        precision_level_1,
+        recall_level_1,
+        f1_level_1,
+        label_precision_level_1,
+        label_recall_level_1,
+        label_f1_level_1,
+    )

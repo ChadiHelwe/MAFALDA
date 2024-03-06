@@ -160,3 +160,5 @@ cython_debug/
 #.idea/
 *.gguf
 *.log
+
+test_code.py
