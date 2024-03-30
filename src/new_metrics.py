@@ -142,13 +142,14 @@ def precision_score(
     sum_score = 0
     for pred in pred_annotations.spans:
         max_partial_score = 0
-        for gold in gold_annotations.spans:
-            if label_score(pred, gold) == 1:
-                max_partial_score = max(
-                    max_partial_score,
-                    partial_overlap_score(pred, gold, PartialScoreType.PRED_SIZE),
-                )
-        sum_score += max_partial_score
+        if pred.label != NOTHING_LABEL:
+            for gold in gold_annotations.spans:
+                if label_score(pred, gold) == 1:
+                    max_partial_score = max(
+                        max_partial_score,
+                        partial_overlap_score(pred, gold, PartialScoreType.PRED_SIZE),
+                    )
+            sum_score += max_partial_score
 
     return sum_score / len(pred_annotations)
 
