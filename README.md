@@ -1,4 +1,4 @@
-# MAFALDA_NAACL
+# MAFALDA (Multi-level Annotated Fallacy Dataset)
 
 <img src="assets/vertical_taxonomy_page.jpg">
 
