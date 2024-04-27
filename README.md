@@ -1,6 +1,6 @@
 # MAFALDA_NAACL
 
-<img src="assets/logo.png" width="400" height="400">
+<img src="assets/vertical_taxonomy_page.jpg">
 
 ## Abstract
 We introduce MAFALDA, a benchmark for fallacy classification that unites previous datasets. It comes with a taxonomy of fallacies that aligns, refines, and unifies previous classifications. We further provide a manual annotation of the dataset together with manual explanations for each annotation. We propose a new annotation scheme tailored for subjective NLP tasks, and a new evaluation method designed to handle subjectivity.<br/>
@@ -39,6 +39,22 @@ pip install -r requirements.txt
 ./run_eval.sh
 ```
 
-N.B: Code tested with Python 3.9.12
+## Citing
 
-We acknowledge the use of a code writing assistant.
+If you want to cite MAFALDA, please refer to the publication in the [Conference of the North American Chapter of the Association for Computational Linguistics](https://2024.naacl.org/):
+
+```code
+@inproceedings{helwe2023mafalda,
+  title={MAFALDA: A Benchmark and Comprehensive Study of Fallacy Detection and Classification},
+  author={Helwe, Chadi and Calamai, Tom and Paris, Pierre-Henri and Clavel, Chlo{\'e} and Suchanek, Fabian},
+  booktitle={Conference of the North American Chapter of the Association for Computational Linguistics (NAACL)},
+  year={2024}
+}
+```
+
+## Acknowledgments
+
+This work was partially funded by ANR-20-CHIA-0012-01 (“NoRDF”).
+
+<!-- 
+N.B: Code tested with Python 3.9.12 -->
