@@ -54,7 +54,6 @@ If you want to cite MAFALDA, please refer to the publication in the [Conference 
 
 ## Acknowledgments
 
-This work was partially funded by ANR-20-CHIA-0012-01 (“NoRDF”).
-
+This work was partially funded by the NoRDF project (ANR-20-CHIA-0012-01), the SINNet project (ANR-23-CE23-0033-01) and Amundi Technology
 <!-- 
 N.B: Code tested with Python 3.9.12 -->
