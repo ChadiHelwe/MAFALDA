@@ -10,8 +10,8 @@ We then evaluate several language models under a zero-shot learning setting and 
 
 ## Installation
 ```bash
-git clone https://github.com/username/MAFALDA_NAACL.git
-cd  MAFALDA_NAACL
+git clone https://github.com/ChadiHelwe/MAFALDA.git
+cd  MAFALDA
 pip install -r requirements.txt
 ```
 
@@ -27,10 +27,6 @@ pip install -r requirements.txt
 ./run_with_gpu.sh
 ```
 
-### with CPU
-```bash
-./run_with_cpu.sh
-```
 ## Run Experiments with OpenAI (GPT 3.5)
 ```bash
 ./run_with_openai.sh

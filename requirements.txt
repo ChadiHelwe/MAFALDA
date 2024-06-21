@@ -6,7 +6,7 @@ scikit-learn
 tqdm
 nltk
 openai
-langchain
+langchain==0.1.0
 # pygamma_agreement
 llama-cpp-python
 # llama-cpp-python: python -m pip install llama-cpp-python --prefer-binary --extra-index-url=https://jllllll.github.io/llama-cpp-python-cuBLAS-wheels/AVX2/cu122
